@@ -38,7 +38,7 @@ Then, in Claude Code, run `/plugin`, select **matrix**, choose **Configure** and
   already have), `endpoint:https://host/v1#model` (your own embedding service).
 - **Embedding endpoint API key** — only for an `endpoint:` search model.
 
-The plugin loads the program from the release as `matrix-standalone.mcpb` (about 22 MB). Its index and
+The plugin ships the program with it as `matrix-standalone.mcpb` (about 22 MB); Claude Code unpacks it on install. Its index and
 models live in `~/Library/Application Support/Matrix MCP`.
 
 ## Use

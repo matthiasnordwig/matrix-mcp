@@ -13,5 +13,6 @@
   "privacyPolicyUrl": "https://github.com/matthiasnordwig/matrix-mcp/blob/main/PRIVACY.md",
   "supportUrl": "https://github.com/matthiasnordwig/matrix-mcp/issues",
   "documentationUrl": "https://github.com/matthiasnordwig/matrix-mcp#readme",
-  "mcpServers": "https://github.com/matthiasnordwig/matrix-mcp/releases/download/v0.2.0/matrix-standalone.mcpb"
+  "icon": "./.claude-plugin/icon.png",
+  "mcpServers": "./matrix-standalone.mcpb"
 }
