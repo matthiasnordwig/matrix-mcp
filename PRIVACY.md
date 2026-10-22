@@ -31,7 +31,8 @@ with it (setting "Folders Claude may read"). It never deletes or changes your fi
   folder: `~/Library/Application Support/Matrix MCP` on macOS (`$XDG_DATA_HOME/matrix-mcp` on Linux).
   The folder is separate from the Matrix app's library.
 - If you configure an embedding endpoint with an API key, the key stays on your computer, encrypted in the
-  local database with a key file in the same folder, and is sent only to the endpoint you configured.
+  local database with a key file in the same folder, and is sent only to the endpoint you configured. A key
+  entered in the plugin's settings in Claude Code is also kept by Claude Code in the system keychain.
 - Diagnostic log lines go to the log of the application that started the program (on your computer). They
   contain tool names, counts and durations; long texts appear only as their length.
 
@@ -55,7 +56,11 @@ with it (setting "Folders Claude may read"). It never deletes or changes your fi
    language-model tasks of the built-in bridge (`llm_tasks` / `llm_answer`): to build tables or the knowledge
    graph, the program hands passages of your documents to the client as tasks, and the client's model
    answers them. The program starts no model and no other program itself and sends these passages nowhere else.
-5. **Matrix app extension.** The "Matrix" extension only talks to the Matrix app on `127.0.0.1` (your own
+5. **Program download (npm).** In Claude Code, the plugin starts the program with `npx`, which fetches the
+   npm packages `@matthiasnordwig/matrix-mcp` and `@matthiasnordwig/matrix-mcp-darwin-arm64` from
+   registry.npmjs.org once per version and keeps them in npm's cache. No document content is sent; npm sees
+   the request and your IP address and handles it under its own privacy policy.
+6. **Matrix app extension.** The "Matrix" extension only talks to the Matrix app on `127.0.0.1` (your own
    computer); the app's own policy applies to what the app does.
 
 No other data leaves your computer. There are no third-party analytics, advertising or tracking services.

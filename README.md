@@ -21,7 +21,7 @@ It brings little for small, well-structured collections that Claude Code reads q
 
 ## Install
 
-Requires a Mac with Apple silicon (macOS, arm64) for now.
+Requires a Mac with Apple silicon (macOS, arm64) and Node.js 18 or later (for `npx`) for now.
 
 ```
 claude plugin marketplace add matthiasnordwig/matrix-mcp
@@ -30,16 +30,20 @@ claude plugin install matrix@matrix-mcp
 
 Then, in Claude Code, run `/plugin`, select **matrix**, choose **Configure** and set:
 
-- **Folders Claude may read** — the folders with your documents (not your whole home folder). Matrix
-  reads only files inside them and never changes or deletes them.
+- **Folders Claude may read** — absolute paths of the folders with your documents (not your whole home
+  folder). Matrix reads only files inside them and never changes or deletes them. A folder name must not
+  contain a comma.
 - **Search model** — leave `embeddinggemma-2` (multilingual, also searches charts and scans). The first
   time it is needed Claude tells you the size (about 1.2 GB, from Hugging Face, once) and asks before
   downloading. Alternatives: `embeddinggemma-2-q4` (0.2 GB, text only), `onnx-folder:/path` (a model you
   already have), `endpoint:https://host/v1#model` (your own embedding service).
-- **Embedding endpoint API key** — only for an `endpoint:` search model.
+- **Embedding endpoint API key** — only for an `endpoint:` search model; stored in the system keychain.
 
-The plugin ships the program with it as `matrix-standalone.mcpb` (about 22 MB); Claude Code unpacks it on install. Its index and
-models live in `~/Library/Application Support/Matrix MCP`.
+Claude Code starts the server with `npx -y @matthiasnordwig/matrix-mcp@0.2.1`: npm fetches the program once
+(about 21 MB, from the npm package `@matthiasnordwig/matrix-mcp-darwin-arm64`; no install script). Its index
+and models live in `~/Library/Application Support/Matrix MCP`. For Claude Desktop, each
+[release](https://github.com/matthiasnordwig/matrix-mcp/releases) also carries `matrix-standalone.mcpb`,
+the same program as a desktop extension.
 
 ## Use
 

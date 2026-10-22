@@ -1,7 +1,7 @@
 {
   "name": "matrix",
   "displayName": "Matrix",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Answer questions over large PDF and document folders ~3× faster than Claude Code alone, with citations to file, page and passage. Local semantic search that also finds paraphrases, scans and charts, plus tables across documents and a knowledge graph; Claude Code is the language model, no extra model needed.",
   "author": {
     "name": "Matthias Nordwig",
@@ -9,10 +9,55 @@
   },
   "homepage": "https://github.com/matthiasnordwig/matrix-mcp",
   "repository": "https://github.com/matthiasnordwig/matrix-mcp",
-  "keywords": ["documents", "pdf", "rag", "semantic-search", "citations", "knowledge-graph", "tables", "local", "ocr"],
+  "keywords": [
+    "documents",
+    "pdf",
+    "rag",
+    "semantic-search",
+    "citations",
+    "knowledge-graph",
+    "tables",
+    "local",
+    "ocr"
+  ],
   "privacyPolicyUrl": "https://github.com/matthiasnordwig/matrix-mcp/blob/main/PRIVACY.md",
   "supportUrl": "https://github.com/matthiasnordwig/matrix-mcp/issues",
   "documentationUrl": "https://github.com/matthiasnordwig/matrix-mcp#readme",
   "icon": "./.claude-plugin/icon.png",
-  "mcpServers": "./matrix-standalone.mcpb"
+  "mcpServers": {
+    "matrix-standalone": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@matthiasnordwig/matrix-mcp@0.2.1"
+      ],
+      "env": {
+        "MATRIX_MCP_ALLOWED_DIRS_COMMA": "${user_config.folders}",
+        "MATRIX_MCP_EMBEDDING": "${user_config.embedding_model}",
+        "MATRIX_MCP_EMBEDDING_API_KEY": "${user_config.embedding_api_key}"
+      }
+    }
+  },
+  "userConfig": {
+    "folders": {
+      "type": "string",
+      "multiple": true,
+      "required": true,
+      "title": "Folders Claude may read",
+      "description": "Absolute paths of the folders with your documents (not your whole home folder). Matrix reads only files inside them, including subfolders, and never changes or deletes them. A folder name must not contain a comma."
+    },
+    "embedding_model": {
+      "type": "string",
+      "default": "embeddinggemma-2",
+      "title": "Search model",
+      "description": "The model that makes your documents searchable by meaning: embeddinggemma-2 (default, multilingual, also charts and scans; about 1.2 GB from Hugging Face, downloaded once after you agree), embeddinggemma-2-q4 (0.2 GB, text only), onnx-folder:/absolute/path (a model folder you already have) or endpoint:https://host/v1#model-name (your own OpenAI-compatible embedding service; your document text is then sent to it). Changing it later only affects new collections."
+    },
+    "embedding_api_key": {
+      "type": "string",
+      "sensitive": true,
+      "default": "",
+      "title": "Embedding endpoint API key (optional)",
+      "description": "Only for an endpoint: search model whose service requires a key. Leave empty otherwise."
+    }
+  }
 }
