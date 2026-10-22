@@ -5,13 +5,13 @@
     "url": "https://github.com/matthiasnordwig"
   },
   "metadata": {
-    "description": "Matrix: local document search with citations for Claude Code."
+    "description": "Matrix: ~3× faster answers over large PDF folders in Claude Code, with citations to file and page. Runs locally."
   },
   "plugins": [
     {
       "name": "matrix",
       "source": "./",
-      "description": "Local semantic search over your document folders with citations, tables over many documents and a knowledge graph."
+      "description": "Answer questions over large PDF and document folders ~3× faster than Claude Code alone, with citations to file, page and passage; also finds scans and charts, builds tables across documents."
     }
   ]
 }

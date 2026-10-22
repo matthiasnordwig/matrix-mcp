@@ -6,6 +6,19 @@ over many documents and a knowledge graph — everything runs on your computer, 
 the language model, so no extra model or API key is needed. [DEMO.md](DEMO.md) compares it with Claude Code
 alone on 442 pages of public documents.
 
+## Why use it
+
+Measured on 442 pages of EU regulations and a report (4 questions, 2 runs each, Claude Code alone vs. with the plugin):
+
+- **A fraction of the time on large document sets.** On average 42 s instead of 126 s per question (about 3×; 2–4× depending on the question), with less than half the tool calls (9.5 instead of 21.4) and about a quarter lower cost ($0.40 instead of $0.53; equal for a question about one single provision). The gap grows with the number of documents a question touches.
+- **Citations with file, page and passage, checked against the text.** Every correct answer in the test cited the right pages.
+- **Finds paraphrases, scans and charts.** Search is by meaning, so a question in other words than the text still finds the provision, and a value that exists only in a chart is found on the chart page. In folders that mix languages, search works best in the documents' language; the skills tell Claude to search in it too.
+- **Tables over many documents.** One question put to every document or passage, as a table with a source per cell.
+- **Everything local, no extra model access.** Index and search run on your computer; Claude Code itself is the language model, so no second model or API key is needed.
+- **The full numbers** are in [DEMO.md](DEMO.md). Claude Code alone answered all questions correctly too (8/8); with the plugin one answer in the first runs was wrong (a chart label too small to read), fixed in the `ask` skill, then 4/4 correct. The gain is effort, not correctness.
+
+It brings little for small, well-structured collections that Claude Code reads quickly anyway: one short document is answered just as well without it, and indexing costs minutes once per folder.
+
 ## Install
 
 Requires a Mac with Apple silicon (macOS, arm64) for now.

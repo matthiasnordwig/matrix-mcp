@@ -2,7 +2,7 @@
   "name": "matrix",
   "displayName": "Matrix",
   "version": "0.2.0",
-  "description": "Local semantic search over your document folders (PDF incl. scans and charts, Word, Excel, PowerPoint, Markdown, images) with citations to file, page and passage; tables over many documents, a knowledge graph and chart search. Runs on your computer, Claude Code is the language model.",
+  "description": "Answer questions over large PDF and document folders ~3× faster than Claude Code alone, with citations to file, page and passage. Local semantic search that also finds paraphrases, scans and charts, plus tables across documents and a knowledge graph; Claude Code is the language model, no extra model needed.",
   "author": {
     "name": "Matthias Nordwig",
     "url": "https://github.com/matthiasnordwig"
