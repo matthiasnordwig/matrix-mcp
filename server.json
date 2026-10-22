@@ -1,0 +1,22 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.matthiasnordwig/matrix-mcp",
+  "title": "Matrix",
+  "description": "Local semantic search over your document folders with citations, tables and a knowledge graph.",
+  "version": "0.2.0",
+  "websiteUrl": "https://github.com/matthiasnordwig/matrix-mcp",
+  "repository": {
+    "url": "https://github.com/matthiasnordwig/matrix-mcp",
+    "source": "github"
+  },
+  "packages": [
+    {
+      "registryType": "mcpb",
+      "identifier": "https://github.com/matthiasnordwig/matrix-mcp/releases/download/v0.2.0/matrix-standalone.mcpb",
+      "fileSha256": "d8e12e2c4e4e3db4c23f7e01d2fee2245915098f3efc068200a885a192005433",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}

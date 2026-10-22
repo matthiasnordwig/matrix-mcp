@@ -1,0 +1,17 @@
+{
+  "name": "matrix-mcp",
+  "owner": {
+    "name": "Matthias Nordwig",
+    "url": "https://github.com/matthiasnordwig"
+  },
+  "metadata": {
+    "description": "Matrix: local document search with citations for Claude Code."
+  },
+  "plugins": [
+    {
+      "name": "matrix",
+      "source": "./",
+      "description": "Local semantic search over your document folders with citations, tables over many documents and a knowledge graph."
+    }
+  ]
+}

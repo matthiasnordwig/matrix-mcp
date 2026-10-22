@@ -1,0 +1,17 @@
+{
+  "name": "matrix",
+  "displayName": "Matrix",
+  "version": "0.2.0",
+  "description": "Local semantic search over your document folders (PDF incl. scans and charts, Word, Excel, PowerPoint, Markdown, images) with citations to file, page and passage; tables over many documents, a knowledge graph and chart search. Runs on your computer, Claude Code is the language model.",
+  "author": {
+    "name": "Matthias Nordwig",
+    "url": "https://github.com/matthiasnordwig"
+  },
+  "homepage": "https://github.com/matthiasnordwig/matrix-mcp",
+  "repository": "https://github.com/matthiasnordwig/matrix-mcp",
+  "keywords": ["documents", "pdf", "rag", "semantic-search", "citations", "knowledge-graph", "tables", "local", "ocr"],
+  "privacyPolicyUrl": "https://github.com/matthiasnordwig/matrix-mcp/blob/main/PRIVACY.md",
+  "supportUrl": "https://github.com/matthiasnordwig/matrix-mcp/issues",
+  "documentationUrl": "https://github.com/matthiasnordwig/matrix-mcp#readme",
+  "mcpServers": "https://github.com/matthiasnordwig/matrix-mcp/releases/download/v0.2.0/matrix-standalone.mcpb"
+}
