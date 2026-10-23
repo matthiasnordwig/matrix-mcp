@@ -2,8 +2,8 @@
   "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
   "name": "io.github.matthiasnordwig/matrix-mcp",
   "title": "Matrix",
-  "description": "Answer questions over large PDF folders ~3x faster, with file and page citations. Runs locally.",
-  "version": "0.2.2",
+  "description": "Answer questions over large PDF folders up to 3x faster, with file and page citations. Runs locally.",
+  "version": "0.2.3",
   "websiteUrl": "https://github.com/matthiasnordwig/matrix-mcp",
   "repository": {
     "url": "https://github.com/matthiasnordwig/matrix-mcp",
@@ -13,15 +13,15 @@
     {
       "registryType": "npm",
       "identifier": "@matthiasnordwig/matrix-mcp",
-      "version": "0.2.2",
+      "version": "0.2.3",
       "transport": {
         "type": "stdio"
       }
     },
     {
       "registryType": "mcpb",
-      "identifier": "https://github.com/matthiasnordwig/matrix-mcp/releases/download/v0.2.2/matrix-standalone.mcpb",
-      "fileSha256": "14afbbefb578512b9570628d7bdaae6b019b95c5c3e6c8abc5e53d0fc0d5701f",
+      "identifier": "https://github.com/matthiasnordwig/matrix-mcp/releases/download/v0.2.3/matrix-standalone.mcpb",
+      "fileSha256": "d2f4c7466d05713f8f1cc2d39ff5eead69aefef6d92b38beb49b8488b4493e8b",
       "transport": {
         "type": "stdio"
       }

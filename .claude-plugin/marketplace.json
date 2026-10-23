@@ -5,13 +5,13 @@
     "url": "https://github.com/matthiasnordwig"
   },
   "metadata": {
-    "description": "Matrix: ~3× faster answers over large PDF folders in Claude Code, with citations to file and page. Runs locally."
+    "description": "Matrix: up to 3× faster answers over large PDF folders in Claude Code, with citations to file and page. Runs locally."
   },
   "plugins": [
     {
       "name": "matrix",
       "source": "./",
-      "description": "Answer questions over large PDF and document folders ~3× faster than Claude Code alone, with citations to file, page and passage; also finds scans and charts, follows cross-references and builds tables across documents."
+      "description": "Answer questions over large PDF and document folders up to 3× faster than Claude Code alone, with citations to file, page and passage; also finds scans and charts, follows cross-references and builds tables across documents."
     }
   ]
 }

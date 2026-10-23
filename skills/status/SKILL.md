@@ -17,12 +17,20 @@ Use only read-only tools; change nothing.
    - `search_model`: the model (`configured`), whether it is installed (`state` ready / needs a download of
      `download_gb` GB), the date of its recommendation (`recommended_on`) and whether that is still current
      (`recommendation_current` false = older than six months: offer `/matrix:search-model`).
+   - `reranker`: whether the passages are re-ordered by relevance (`state` ready / needs a download of
+     `download_gb` GB / off) and its license.
    - `shared_folders`: the folders Matrix may read and where each comes from (`project` = the folder Claude
      Code was started in, `setting` = plugin setting, `granted` = the user allowed it when asked), and
      `problems` (a folder that does not exist or cannot be read, with the reason).
    - `model_task_queue.waiting` / `fetched_not_answered`: tasks Matrix has handed to Claude that are not
      answered yet. Say that they run in this Claude Code session and count against the user's quota.
    - `running_jobs`: what is running now (indexing, download); name it in words with its progress.
+   - `index.collections`: per collection whether it matches its folders - `state` current / updating
+     (`files_updating` files are being read again) / waiting (`waiting_for`) / not_checked_yet - with the
+     time of the last check (`last_check_seconds_ago`, say "2 minutes ago"), `missing_files` (files gone
+     from the folder: kept in the collection but no longer searched; name a few from `missing`),
+     `unreadable_files` and `problems` (a folder no longer shared or no longer there: not checked).
+     Nothing is ever deleted automatically; removing documents of missing files is not possible here.
 3. Present it as a short list, for example:
 
    ```
@@ -30,7 +38,9 @@ Use only read-only tools; change nothing.
    Collections
      Contracts - 42 documents, 1,310 passages, split along headings and articles
                  folder /Users/me/Documents/Contracts
+                 up to date (checked 2 minutes ago); 1 file no longer in the folder: old-offer.pdf
    Search model   embeddinggemma-2, installed; recommended October 2026 (still current)
+   Re-ordering    bge-reranker-v2-m3, installed
    Folders Matrix may read
      /Users/me/Documents/Contracts   (the folder Claude Code was started in)
      /Users/me/Downloads/Papers      (you allowed it)

@@ -1,8 +1,8 @@
 {
   "name": "matrix",
   "displayName": "Matrix",
-  "version": "0.2.2",
-  "description": "Answer questions over large PDF and document folders ~3× faster than Claude Code alone, with citations to file, page and passage. Local semantic search that also finds paraphrases, scans and charts, follows cross-references between provisions, and builds tables across documents. Claude Code walks you through the setup; no extra model needed.",
+  "version": "0.2.3",
+  "description": "Answer questions over large PDF and document folders up to 3× faster than Claude Code alone, with citations to file, page and passage. Local semantic search that also finds paraphrases, scans and charts, follows cross-references between provisions, and builds tables across documents. Claude Code walks you through the setup; no extra model needed.",
   "author": {
     "name": "Matthias Nordwig",
     "url": "https://github.com/matthiasnordwig"
@@ -29,7 +29,7 @@
       "command": "npx",
       "args": [
         "-y",
-        "@matthiasnordwig/matrix-mcp@0.2.2"
+        "@matthiasnordwig/matrix-mcp@0.2.3"
       ],
       "env": {
         "MATRIX_MCP_PROJECT_DIR": "${CLAUDE_PROJECT_DIR}",

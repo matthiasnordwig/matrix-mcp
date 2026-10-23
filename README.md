@@ -4,19 +4,20 @@ Claude Code can grep code, but it cannot search PDFs, Word files, scans or chart
 it a local semantic index over your document folders, with citations to file, page and passage, cross-references
 between provisions and tables over many documents — everything runs on your computer, and Claude Code itself is
 the language model, so no extra model or API key is needed. [DEMO.md](DEMO.md) compares it with Claude Code
-alone on 442 pages of public documents.
+alone on 442 and on 1,592 pages of public documents.
 
 ## Why use it
 
-Measured on 442 pages of EU regulations and a report (4 questions, 2 runs each, Claude Code alone vs. with the plugin):
+Measured twice, Claude Code alone vs. with the plugin ([DEMO.md](DEMO.md) has the numbers, the questions and the right answers):
+on 442 pages of EU regulations and a report (4 questions, 2 runs each), and on 1,592 pages in 14 documents in four languages (version 0.2.3, 4 questions, 1 run each).
 
-- **A fraction of the time on large document sets.** On average 42 s instead of 126 s per question (about 3×; 2–4× depending on the question), with less than half the tool calls (9.5 instead of 21.4) and about a quarter lower cost ($0.40 instead of $0.53; equal for a question about one single provision). The gap grows with the number of documents a question touches.
-- **Index once, ask many times.** Indexing runs once on your computer and costs no Claude tokens; the index stays across sessions. Every further question about the same documents is then faster and cheaper — on average 42 s instead of 126 s, about a quarter cheaper (DEMO.md). This pays off when there are many or long documents, further questions about the same set are likely and answers should come with evidence — for example contracts, regulations, project files, technical manuals, studies, minutes or reports. For a one-off question Claude may search the files itself, and says so when an answer has no evidence from your files.
-- **Citations with file, page and passage, checked against the text.** Every correct answer in the test cited the right pages.
-- **Finds paraphrases, scans and charts.** Search is by meaning, so a question in other words than the text still finds the provision, and a value that exists only in a chart is found on the chart page. In folders that mix languages, search works best in the documents' language; the skills tell Claude to search in it too.
+- **Less effort on large document sets.** 442 pages: on average 42 s instead of 126 s per question (about 3×; 2–4× depending on the question), with less than half the tool calls (9.5 instead of 21.4) and less than half the input tokens (303 k instead of 651 k). 1,592 pages: 35 % less time (117 s instead of 180 s for the four questions), 34 % fewer input tokens (405 k instead of 615 k), 60 % fewer output tokens and half the rounds. The gain is largest for a question about one provision asked in other words or another language, and smallest where the answer is spread over several acts (almost none: Claude searches once per act either way).
+- **Index once, ask many times.** Indexing runs once on your computer and costs no Claude tokens; the index stays across sessions and follows its folder by itself. Every further question about the same documents is then faster and uses fewer tokens (DEMO.md). This pays off when there are many or long documents, further questions about the same set are likely and answers should come with evidence — for example contracts, regulations, project files, technical manuals, studies, minutes or reports. For a one-off question Claude may search the files itself, and says so when an answer has no evidence from your files.
+- **Citations with file, article and passage, checked against the text.** Every answer in both tests named the right document, article and passage. Two page numbers on the large set were one page off, where a passage runs over a page break (known, not yet fixed); Claude Code alone had exact pages.
+- **Finds paraphrases, scans and charts.** Search is by meaning, so a question in other words than the text still finds the provision, and a value that exists only in a chart is found on the chart page. On 30 test questions the right place was first for 17 (12 in 0.2.2) and among the first five for 27 (19 before), with the optional re-ranking model; one search result is about 1,160 tokens instead of 5,500. In folders that mix languages, search works best in the documents' language; the skills tell Claude to search in it too.
 - **Tables over many documents.** One question put to every document or passage, as a table with a source per cell.
 - **Everything local, no extra model access.** Index and search run on your computer; Claude Code itself is the language model, so no second model or API key is needed.
-- **The full numbers** are in [DEMO.md](DEMO.md). Claude Code alone answered all questions correctly too (8/8); with the plugin one answer in the first runs was wrong (a chart label too small to read), fixed in the `ask` skill, then 4/4 correct. The gain is effort, not correctness.
+- **Claude Code alone answered all questions correctly too** (8/8 and 4/4); with the plugin one answer in the first runs of the 442-page test was wrong (a chart label too small to read), fixed in the `ask` skill, then 4/4 correct. The gain is effort, not correctness.
 
 It brings little for small, well-structured collections that Claude Code reads quickly anyway: one short document is answered just as well without it, and indexing costs minutes once per folder.
 
@@ -35,10 +36,13 @@ Then start `claude` (best in the folder with your documents) and just ask Claude
 
 - Documents are split along their own structure — PDF layout, headings, articles, tables — not by a language model (the semantic chunker is not the default).
 - Search is by meaning plus keywords, and follows cross-references between provisions; scans and charts are found too.
+- The best passages are put first by a second, small model (**re-ranking**, optional: about 0.6 GB from Hugging Face, license Apache-2.0, downloaded once and only after you agree; without it search works as before).
+- Hits are compact: an excerpt of about 300 characters with file, pages and the **outline path** (document › chapter › article › paragraph), hits of one article merged. Claude reads the full text with `get_chunks`, and a whole article or section with `get_section`, before it cites.
 - Every answer cites file, page and passage, and the citations are checked against the text.
 - Tables over many documents hand small model tasks to Claude through a queue (`llm_tasks` / `llm_answer`); they run in your Claude Code session and use your Claude quota.
 - Index, models and the list of allowed folders live in `~/Library/Application Support/Matrix MCP`; nothing leaves your computer except the passages Claude reads.
 - Matrix reads the folder you started Claude Code in; for any other folder it asks you (Accept / Decline) and remembers your answer.
+- An indexed folder stays in sync: new and changed files are read again by themselves (checked at start and before searches, at most once a minute); a deleted file stays in the collection, marked missing and left out of searches — nothing is deleted for you.
 - `/matrix:status` shows what Matrix holds and does at any time.
 
 ## Use
@@ -80,7 +84,11 @@ you; do not delete it while Claude Code runs.
 needed Claude tells you the size (about 1.2 GB, from Hugging Face, once) and asks before downloading.
 Alternatives: `embeddinggemma-2-q4` (0.2 GB, text only), `onnx-folder:/path` (a model you already have),
 `endpoint:https://host/v1#model` (your own embedding service; the API key is stored in the system keychain).
-Claude Code starts the server with `npx -y @matthiasnordwig/matrix-mcp@0.2.2`: npm fetches the program once
+
+**Re-ranking.** After the search model, Claude offers once to download the re-ranking model (bge-reranker-v2-m3, int8,
+about 0.6 GB from Hugging Face, license Apache-2.0) and does so only after you agree. It re-orders the first 20 candidates
+by relevance, which costs about 4 s per search on an Apple-silicon Mac. Declined or not installed: the search runs as before.
+Claude Code starts the server with `npx -y @matthiasnordwig/matrix-mcp@0.2.3`: npm fetches the program once
 (about 21 MB, no install script). For Claude Desktop, each
 [release](https://github.com/matthiasnordwig/matrix-mcp/releases) also carries `matrix-standalone.mcpb`,
 the same program as a desktop extension.
@@ -97,6 +105,7 @@ but would also allow reading folders and the model download, so they are not use
       "mcp__plugin_matrix_matrix-standalone__find_citing_chunks",
       "mcp__plugin_matrix_matrix-standalone__get_chunks",
       "mcp__plugin_matrix_matrix-standalone__get_page_image",
+      "mcp__plugin_matrix_matrix-standalone__get_section",
       "mcp__plugin_matrix_matrix-standalone__get_status",
       "mcp__plugin_matrix_matrix-standalone__grid_results",
       "mcp__plugin_matrix_matrix-standalone__job_status",

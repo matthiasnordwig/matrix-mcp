@@ -32,6 +32,8 @@ Matrix is already set up, say so and offer `/matrix:status` or a question instea
    `setup_embedding_model` (the person approves that call or answers Matrix's question - that is their consent)
    and follow `job_status`, telling them in words how far it is. A running download can be stopped with
    `setup_embedding_model` and `cancel: true`.
+   Then `get_status` -> `reranker`: if it needs a download, offer it once in one sentence (it puts the best
+   passages first; about 0.6 GB from Hugging Face, license Apache-2.0, sizes from `get_status`) and call `setup_embedding_model` with `reranker: true` only after a yes. Without it the search works as before.
 5. **Index.** Follow the steps of `/matrix:index` for that folder (collection with structural splitting, the
    folder written into its description, `add_files`, `job_status`). Tell them about progress in words
    ("12 of 40 files").

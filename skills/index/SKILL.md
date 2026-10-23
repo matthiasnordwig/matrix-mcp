@@ -13,8 +13,9 @@ Matrix reads the folder Claude Code was started in and folders the user allowed 
 For any other folder `add_files` asks the user; tell them in a sentence which folder you are about to
 read and why before you call it, and never try to get around a refusal.
 
-1. `list_contexts`. If a collection for this folder exists, reuse its `context_id` and call
-   `list_documents`: `add_files` twice adds files twice, so add only what is missing.
+1. `list_contexts`. If a collection for this folder exists, reuse its `context_id`: `add_files` on the
+   same folder adds only files that are not in it yet (`already_in_context`), and Matrix keeps it up to
+   date by itself afterwards (new and changed files are read again, deleted ones marked missing).
    Otherwise `create_context` with `{name, chunking_strategy: "structural", description}` (name =
    $1 or the folder name; put "Folder: <absolute path>" into the description, `/matrix:status` shows it).
    Structural chunking needs no language model.

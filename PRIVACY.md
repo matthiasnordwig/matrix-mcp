@@ -42,7 +42,8 @@ allowed when the program asked. It never deletes or changes your files.
 
 1. **Search model download (Hugging Face).** The first time search is needed, the program asks for your
    consent and then downloads the search model (EmbeddingGemma 2, about 1.2 GB; a 0.2 GB text-only variant
-   exists) from huggingface.co. The download is a plain file download; no document content, account or token
+   exists) from huggingface.co. The same applies to the optional re-ranking model (bge-reranker-v2-m3, about
+   0.6 GB, Apache-2.0), which puts the best passages first and is offered once. The download is a plain file download; no document content, account or token
    is sent. Hugging Face sees the request and your IP address and handles it under its own privacy policy.
    The tools that look for other search models (`search_embedding_models` and the model-search tools) also
    contact huggingface.co, with the search words only, and download nothing. A download happens only
