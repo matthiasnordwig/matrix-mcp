@@ -15,19 +15,21 @@ computer only in the ways listed under "Sharing" below, and each of them is some
 ## What is collected
 
 Nothing is collected by the developer. The program itself reads only files inside the folders you share
-with it (setting "Folders Claude may read"). It never deletes or changes your files.
+with it: the folder Claude Code was started in, folders from the plugin setting "folders", and folders you
+allowed when the program asked. It never deletes or changes your files.
 
 ## How the data is used
 
 - The program reads the shared files, splits them into passages and builds a local search index
   (text, vectors, and for PDFs the pictures of graphics pages) so that Claude can search them and
   quote them with the source.
-- Claude (or another MCP client) asks the program for passages, documents, tables and the knowledge
-  graph; the program answers from the local index.
+- Claude (or another MCP client) asks the program for passages, documents and tables; the program answers
+  from the local index.
 
 ## Storage
 
-- The index, the settings and downloaded models are stored only on your computer, in the program's data
+- The index, the settings, the list of folders you allowed (`allowed_folders.json`) and downloaded models
+  are stored only on your computer, in the program's data
   folder: `~/Library/Application Support/Matrix MCP` on macOS (`$XDG_DATA_HOME/matrix-mcp` on Linux).
   The folder is separate from the Matrix app's library.
 - If you configure an embedding endpoint with an API key, the key stays on your computer, encrypted in the
@@ -51,10 +53,9 @@ with it (setting "Folders Claude may read"). It never deletes or changes your fi
 3. **Optional language-model endpoints.** If you register a language-model endpoint with an API key, passages
    are sent to that provider when you use the features that call it. By default no such endpoint is used.
 4. **Your AI client and its model.** Whatever Claude (or another client) asks the program for — search
-   results, passages, table rows, graph entries — is returned to that client and is processed by its model,
+   results, passages, table rows — is returned to that client and is processed by its model,
    under the privacy terms of the client's provider (for Claude: Anthropic's). This includes the
-   language-model tasks of the built-in bridge (`llm_tasks` / `llm_answer`): to build tables or the knowledge
-   graph, the program hands passages of your documents to the client as tasks, and the client's model
+   language-model tasks of the built-in bridge (`llm_tasks` / `llm_answer`): to build tables, the program hands passages of your documents to the client as tasks, and the client's model
    answers them. The program starts no model and no other program itself and sends these passages nowhere else.
 5. **Program download (npm).** In Claude Code, the plugin starts the program with `npx`, which fetches the
    npm packages `@matthiasnordwig/matrix-mcp` and `@matthiasnordwig/matrix-mcp-darwin-arm64` from

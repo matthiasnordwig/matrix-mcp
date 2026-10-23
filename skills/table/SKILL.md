@@ -15,7 +15,11 @@ Question for every row: $ARGUMENTS
 2. Columns: `suggest_grid_columns` with `{prompt: <question>}` starts a job whose one model step
    you answer yourself (step 4); `job_status` then returns a `json_schema`. Show the columns in one
    line and store them with `create_profile` (`kind: "grid"`, `data_format: "json"`).
-3. `run_grid` with `{source_context_id, grid_profile_id, max_rows}` (or `row_texts`); leave
+3. **Before starting, tell the user what it costs**: every row is one model task that Claude answers in this
+   session, so N rows are about N tasks (plus one for the column suggestion), counted against their Claude
+   quota. Name the number (`max_rows`, or the count of `row_texts`) and, when it is above about 30, offer
+   fewer or more relevant rows. Go on once they agree.
+   `run_grid` with `{source_context_id, grid_profile_id, max_rows}` (or `row_texts`); leave
    `llm_id` out - the default model is the endpoint `client`, which is you.
 4. **Serve the model tasks.** Call `llm_tasks` (`{max: 10, wait_seconds: 30}`). Answer every task
    with `llm_answer` in exactly the requested format (`answer_format: json` = one JSON value
@@ -28,6 +32,8 @@ Question for every row: $ARGUMENTS
 5. `grid_results` with `{run_id, wait_seconds: 30}`. Present the table; keep the `row` chunk id
    per row so every cell can be checked with `get_chunks`; say how many rows had no answer. Do
    not add facts the cells do not contain.
+
+Say at the end how many rows were answered and how many tasks that took.
 
 Matrix never starts another program or uses credentials for these tasks: they are answered in
 this session by you.

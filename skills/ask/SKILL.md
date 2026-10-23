@@ -1,5 +1,5 @@
 ---
-description: Answer a question from the user's indexed documents with Matrix, citing file, page and passage. Use for questions about the content of PDFs, Word or Excel files, scans or charts in an indexed collection, especially large or many documents, questions worded differently from the text, in another language than the documents, or answers spread over several documents.
+description: Answer a question from the user's indexed documents with Matrix, citing file, page and passage. Use for questions about the content of documents in an indexed collection - PDFs, Word or Excel files, scans or charts - especially when there are many or long documents (for example contracts, regulations, project files, manuals, studies, minutes or reports), when the question is worded differently from the text or in another language than the documents, or when the answer is spread over several documents.
 argument-hint: <question> [collection]
 allowed-tools: mcp__plugin_matrix_matrix-standalone__list_contexts mcp__plugin_matrix_matrix-standalone__list_documents mcp__plugin_matrix_matrix-standalone__search_context mcp__plugin_matrix_matrix-standalone__lookup_exact mcp__plugin_matrix_matrix-standalone__get_chunks mcp__plugin_matrix_matrix-standalone__get_page_image mcp__plugin_matrix_matrix-standalone__verify_citations
 ---
@@ -9,7 +9,7 @@ allowed-tools: mcp__plugin_matrix_matrix-standalone__list_contexts mcp__plugin_m
 Question: $ARGUMENTS
 
 1. `list_contexts` and pick the collection that fits (ask only if several fit equally). No
-   collection yet: index the folder first (skill `index`).
+   collection yet: offer the guided start (skill `setup`), or index the folder first (skill `index`).
 2. `search_context` with `context_ids: [<id>]`. Search by meaning, so phrase the query as the
    answer would read in the documents. The search finds best in the language of the documents: if the
    question is in another language, search in theirs as well. Run two or three wordings, and

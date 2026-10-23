@@ -1,8 +1,8 @@
 {
   "name": "matrix",
   "displayName": "Matrix",
-  "version": "0.2.1",
-  "description": "Answer questions over large PDF and document folders ~3× faster than Claude Code alone, with citations to file, page and passage. Local semantic search that also finds paraphrases, scans and charts, plus tables across documents and a knowledge graph; Claude Code is the language model, no extra model needed.",
+  "version": "0.2.2",
+  "description": "Answer questions over large PDF and document folders ~3× faster than Claude Code alone, with citations to file, page and passage. Local semantic search that also finds paraphrases, scans and charts, follows cross-references between provisions, and builds tables across documents. Claude Code walks you through the setup; no extra model needed.",
   "author": {
     "name": "Matthias Nordwig",
     "url": "https://github.com/matthiasnordwig"
@@ -15,10 +15,10 @@
     "rag",
     "semantic-search",
     "citations",
-    "knowledge-graph",
     "tables",
     "local",
-    "ocr"
+    "ocr",
+    "cross-references"
   ],
   "privacyPolicyUrl": "https://github.com/matthiasnordwig/matrix-mcp/blob/main/PRIVACY.md",
   "supportUrl": "https://github.com/matthiasnordwig/matrix-mcp/issues",
@@ -29,9 +29,10 @@
       "command": "npx",
       "args": [
         "-y",
-        "@matthiasnordwig/matrix-mcp@0.2.1"
+        "@matthiasnordwig/matrix-mcp@0.2.2"
       ],
       "env": {
+        "MATRIX_MCP_PROJECT_DIR": "${CLAUDE_PROJECT_DIR}",
         "MATRIX_MCP_ALLOWED_DIRS_COMMA": "${user_config.folders}",
         "MATRIX_MCP_EMBEDDING": "${user_config.embedding_model}",
         "MATRIX_MCP_EMBEDDING_API_KEY": "${user_config.embedding_api_key}"
@@ -42,9 +43,9 @@
     "folders": {
       "type": "string",
       "multiple": true,
-      "required": true,
-      "title": "Folders Claude may read",
-      "description": "Absolute paths of the folders with your documents (not your whole home folder). Matrix reads only files inside them, including subfolders, and never changes or deletes them. A folder name must not contain a comma."
+      "required": false,
+      "title": "More folders Claude may read (optional)",
+      "description": "Optional. Matrix reads the folder you start Claude Code in; for any other folder it asks you first, so you normally set nothing here. Absolute paths of folders to always allow (not your whole home folder), several separated by commas; a folder name must not contain a comma. Matrix reads files there, including subfolders, and never changes or deletes them."
     },
     "embedding_model": {
       "type": "string",
