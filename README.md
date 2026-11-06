@@ -13,7 +13,7 @@ on 442 pages of EU regulations and a report (4 questions, 2 runs each), and on 1
 
 - **Less effort on large document sets.** 442 pages: on average 42 s instead of 126 s per question (about 3×; 2–4× depending on the question), with less than half the tool calls (9.5 instead of 21.4) and less than half the input tokens (303 k instead of 651 k). 1,592 pages: 35 % less time (117 s instead of 180 s for the four questions), 34 % fewer input tokens (405 k instead of 615 k), 60 % fewer output tokens and half the rounds. The gain is largest for a question about one provision asked in other words or another language, and smallest where the answer is spread over several acts (almost none: Claude searches once per act either way).
 - **Index once, ask many times.** Indexing runs once on your computer and costs no Claude tokens; the index stays across sessions and follows its folder by itself. Every further question about the same documents is then faster and uses fewer tokens (DEMO.md). This pays off when there are many or long documents, further questions about the same set are likely and answers should come with evidence — for example contracts, regulations, project files, technical manuals, studies, minutes or reports. For a one-off question Claude may search the files itself, and says so when an answer has no evidence from your files.
-- **Citations with file, article and passage, checked against the text.** Every answer in both tests named the right document, article and passage. Two page numbers on the large set were one page off, where a passage runs over a page break (known, not yet fixed); Claude Code alone had exact pages.
+- **Citations with file, article and passage, checked against the text.** Every answer in both tests named the right document, article and passage. Two page numbers on the large set were one page off, where a passage runs over a page break; fixed since: a hit lists every page its passage covers, and the passage text marks each page change with `[p. N]`.
 - **Finds paraphrases, scans and charts.** Search is by meaning, so a question in other words than the text still finds the provision, and a value that exists only in a chart is found on the chart page. On 30 test questions the right place was first for 17 (12 in 0.2.2) and among the first five for 27 (19 before), with the optional re-ranking model; one search result is about 1,160 tokens instead of 5,500. In folders that mix languages, search works best in the documents' language; the skills tell Claude to search in it too.
 - **Tables over many documents.** One question put to every document or passage, as a table with a source per cell.
 - **Everything local, no extra model access.** Index and search run on your computer; Claude Code itself is the language model, so no second model or API key is needed.
@@ -35,7 +35,8 @@ Then start `claude` (best in the folder with your documents) and just ask Claude
 ## How it works
 
 - Documents are split along their own structure — PDF layout, headings, articles, tables — not by a language model (the semantic chunker is not the default).
-- Search is by meaning plus keywords, and follows cross-references between provisions; scans and charts are found too.
+- Documents are cut by their kind: laws and standards along articles, mails into one passage per message of a thread (passages and attachments repeated in several mails are kept once, attachments become documents of their own), minutes, transcripts, slides, books and source code each by their own markers; a text of no clear kind by paragraphs.
+- Search is by meaning plus keywords, and follows cross-references between provisions; scans and charts are found too. It can be narrowed to the mails of one sender, a date range or a folder ("what did X write in autumn 2001").
 - The best passages are put first by a second, small model (**re-ranking**, optional: about 0.6 GB from Hugging Face, license Apache-2.0, downloaded once and only after you agree; without it search works as before).
 - Hits are compact: an excerpt of about 300 characters with file, pages and the **outline path** (document › chapter › article › paragraph), hits of one article merged. Claude reads the full text with `get_chunks`, and a whole article or section with `get_section`, before it cites.
 - Every answer cites file, page and passage, and the citations are checked against the text.
@@ -43,6 +44,7 @@ Then start `claude` (best in the folder with your documents) and just ask Claude
 - Index, models and the list of allowed folders live in `~/Library/Application Support/Matrix MCP`; nothing leaves your computer except the passages Claude reads.
 - Matrix reads the folder you started Claude Code in; for any other folder it asks you (Accept / Decline) and remembers your answer.
 - An indexed folder stays in sync: new and changed files are read again by themselves (checked at start and before searches, at most once a minute); a deleted file stays in the collection, marked missing and left out of searches — nothing is deleted for you.
+- While Matrix reads or searches, it keeps the Mac from sleeping, as the Matrix app does.
 - `/matrix:status` shows what Matrix holds and does at any time.
 
 ## Use
@@ -51,14 +53,16 @@ Then start `claude` (best in the folder with your documents) and just ask Claude
 |---|---|
 | `/matrix:setup` | Guided first start: folder, search model, indexing, example questions |
 | `/matrix:status` | What Matrix holds and does: collections, search model, allowed folders, waiting model tasks, running jobs |
-| `/matrix:index <folder>` | Index a folder into a collection (PDF incl. scans and charts, Word, Excel, PowerPoint, Markdown, text, images) |
+| `/matrix:index <folder>` | Index a folder into a collection (PDF incl. scans and charts, Word, Excel, PowerPoint (also the old .doc, .xls, .ppt), OpenDocument, mails (.eml, .msg, with their attachments), EPUB, RTF, HTML, CSV, Markdown, text, source code, images, ZIP) |
 | `/matrix:ask <question>` | Answer from the documents with citations (file, page, passage), checked against the text |
 | `/matrix:table <question>` | The same question over many documents or passages, as a table with a source per cell |
 | `/matrix:search-model` | Check the search model against its recommendation date, look for better ones |
 
 You can also just ask; Claude picks the matching skill. The server also offers its own prompts
 (type `/` and look for `index_and_ask`, `compare_documents`, …). Tables hand Claude small model tasks
-(`llm_tasks`, answered with `llm_answer`); with many tasks Claude can answer them through parallel subagents.
+(`llm_tasks`, answered with `llm_answer`). With more than about ten, Claude starts the plugin's worker agent
+`matrix:llm-worker` (Sonnet, only these two tools) for each batch: it fetches and answers the tasks itself and
+reports only counts, so the passages do not fill your conversation.
 They use your Claude Code session like any other work you ask for; Claude tells you the number first.
 
 ## Details
@@ -87,9 +91,9 @@ Alternatives: `embeddinggemma-2-q4` (0.2 GB, text only), `onnx-folder:/path` (a 
 
 **Re-ranking.** After the search model, Claude offers once to download the re-ranking model (bge-reranker-v2-m3, int8,
 about 0.6 GB from Hugging Face, license Apache-2.0) and does so only after you agree. It re-orders the first 20 candidates
-by relevance, which costs about 4 s per search on an Apple-silicon Mac. Declined or not installed: the search runs as before.
-Claude Code starts the server with `npx -y @matthiasnordwig/matrix-mcp@0.2.3`: npm fetches the program once
-(about 21 MB, no install script). For Claude Desktop, each
+by relevance, which costs about 4 s per search on an Apple-silicon Mac. For a long mail it reads the paragraph closest to the question instead of the header and recipients. Declined or not installed: the search runs as before.
+Claude Code starts the server with `npx -y @matthiasnordwig/matrix-mcp@0.2.4`: npm fetches the program once
+(about 22 MB, no install script). For Claude Desktop, each
 [release](https://github.com/matthiasnordwig/matrix-mcp/releases) also carries `matrix-standalone.mcpb`,
 the same program as a desktop extension.
 

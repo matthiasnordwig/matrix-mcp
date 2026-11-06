@@ -12,7 +12,7 @@ Skip steps that are already done (check `list_contexts`, `get_status`, `list_all
 Matrix is already set up, say so and offer `/matrix:status` or a question instead).
 
 1. **What Matrix does** (two sentences): it makes their documents - PDFs including scans and charts, Word,
-   Excel, PowerPoint, text - searchable by meaning on this computer, so Claude can answer from them with
+   Excel, PowerPoint, mails, text - searchable by meaning on this computer, so Claude can answer from them with
    file and page as proof. Index and search model stay on this Mac; only the passages Claude reads go to
    Claude like any other file it reads. Ask: "Shall we set it up now? It takes a few minutes."
 2. **Which folder?** Suggest candidates, never guess without asking:

@@ -1,5 +1,5 @@
 ---
-description: Answer a question from the user's indexed documents with Matrix, citing file, page and passage. Use for questions about the content of documents in an indexed collection - PDFs, Word or Excel files, scans or charts - especially when there are many or long documents (for example contracts, regulations, project files, manuals, studies, minutes or reports), when the question is worded differently from the text or in another language than the documents, or when the answer is spread over several documents.
+description: Answer a question from the user's indexed documents with Matrix, citing file, page and passage. Use for questions about the content of documents in an indexed collection - PDFs, Word or Excel files, mails, scans or charts - especially when there are many or long documents (for example contracts, regulations, project files, manuals, studies, minutes or reports), when the question is worded differently from the text or in another language than the documents, or when the answer is spread over several documents.
 argument-hint: <question> [collection]
 allowed-tools: mcp__plugin_matrix_matrix-standalone__list_contexts mcp__plugin_matrix_matrix-standalone__list_documents mcp__plugin_matrix_matrix-standalone__search_context mcp__plugin_matrix_matrix-standalone__lookup_exact mcp__plugin_matrix_matrix-standalone__get_chunks mcp__plugin_matrix_matrix-standalone__get_section mcp__plugin_matrix_matrix-standalone__get_page_image mcp__plugin_matrix_matrix-standalone__verify_citations
 ---
@@ -16,7 +16,9 @@ Question: $ARGUMENTS
    than the documents it is about, run each query a second time translated into theirs (a collection
    in several languages: into the language of the documents that likely hold the answer). Run two or
    three wordings, and one query per sub-question for answers spread over several documents. For an
-   exact term, number or paragraph label use `lookup_exact`. A hit is an excerpt of about 300
+   exact term, number or paragraph label use `lookup_exact`. A question about one sender, a period or a
+   folder ("what did X write in autumn 2001") goes into the filters `sender`, `date_from`/`date_to`
+   and `folder` (both tools) rather than into the query. A hit is an excerpt of about 300
    characters with file, `pages`, `path`, `language` and `chunk_ids` (hits of one article are
    merged): it shows where to look, it is not text to quote. Matrix keeps the collection up to date
    with its folder by itself: if a result says the index is being updated, tell the user that changed

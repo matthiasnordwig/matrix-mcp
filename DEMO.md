@@ -175,6 +175,11 @@ instead of whole passages; and the index follows its folder by itself. Measured 
 - **Caveat:** the same 30 questions were used to choose the number of candidates, the excerpt length and the
   re-ranking model, so the 0.2.3 figures are somewhat optimistic for questions nobody tuned for. 0.2.2 and
   0.2.3 were measured on the same index and the same questions.
+- **Re-measured with 0.2.4** (2026-11-06, index rebuilt because PDF lines are now read in reading order and
+  documents are cut by their kind: 6,063 passages instead of 5,950, 16 min): Top-1/5/10 17 / 27 / 27, MRR 0.70,
+  coverage 0.81 (was 0.78), about 1,150 tokens per search, about 4 s per search with the re-ranker — the same as
+  0.2.3 within one rank. The new filters (sender, date, folder) and the mail handling of 0.2.4 are not exercised
+  by this corpus, which has no mails.
 
 ### Claude Code alone vs. with the plugin, 4 questions
 
@@ -212,8 +217,10 @@ Honest reading:
 - **Citations are where the plugin was worse:** two page numbers were one page off, both with the same cause. A
   hit lists the page on which its passage starts; when a passage runs over a page break, the text of the next page
   is inside it (GDPR Art. 17(1)(b)–(f) and Art. 83(5) both sit at the top of the following page, the hit says
-  p. 43 and p. 82). Claude Code alone read the page text itself and had exact pages. Known issue, not fixed in
-  0.2.3; file, article and passage were right in every B answer.
+  p. 43 and p. 82). Claude Code alone read the page text itself and had exact pages. File, article and passage were right in
+  every B answer. Fixed right after this run, still in the released 0.2.3: a hit lists every page its passage
+  covers (`pages: [43, 44]`), the passage text marks each page change with a line `[p. N]`, and
+  `verify_citations` reports the page of each verified quote.
 - **Not in the table:** indexing (16 min once for this folder), and the one-time downloads (search model about 1.2 GB,
   re-ranking model about 0.6 GB). Indexing costs no Claude tokens. The saving here is roughly 50,000 input tokens per
   question; for a one-off question about a few documents, indexing is not worth it.
