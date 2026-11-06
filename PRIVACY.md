@@ -30,7 +30,8 @@ allowed when the program asked. It never deletes or changes your files.
 
 - The index, the settings, the list of folders you allowed (`allowed_folders.json`) and downloaded models
   are stored only on your computer, in the program's data
-  folder: `~/Library/Application Support/Matrix MCP` on macOS (`$XDG_DATA_HOME/matrix-mcp` on Linux).
+  folder: `~/Library/Application Support/Matrix MCP` on macOS, `%APPDATA%\Matrix MCP` on Windows,
+  `$XDG_DATA_HOME/matrix-mcp` (else `~/.local/share/matrix-mcp`) on Linux.
   The folder is separate from the Matrix app's library.
 - If you configure an embedding endpoint with an API key, the key stays on your computer, encrypted in the
   local database with a key file in the same folder, and is sent only to the endpoint you configured. A key
@@ -48,21 +49,29 @@ allowed when the program asked. It never deletes or changes your files.
    The tools that look for other search models (`search_embedding_models` and the model-search tools) also
    contact huggingface.co, with the search words only, and download nothing. A download happens only
    after you agreed.
-2. **Optional embedding endpoint.** If you set the search model to `endpoint:…`, the text of your documents
+2. **Text recognition models on Windows and Linux (Hugging Face).** The first time a scanned page or a
+   picture is read on Windows or Linux, the program downloads three text recognition files (PaddleOCR,
+   about 12.6 MB in total, license Apache-2.0) from huggingface.co into its data folder, once, without a
+   separate question; scans cannot be read without them. As with the search model, this is a plain file
+   download: no document content, account or token is sent, and Hugging Face sees the request and your IP
+   address. On macOS the system's own text recognition is used and nothing is downloaded. In a closed network
+   the files can be copied into the `models/ocr` folder of the data folder instead.
+3. **Optional embedding endpoint.** If you set the search model to `endpoint:…`, the text of your documents
    (and of your search queries) is sent to that service to compute vectors, and its provider's privacy policy
    applies. Without that setting nothing is sent to any embedding service.
-3. **Optional language-model endpoints.** If you register a language-model endpoint with an API key, passages
+4. **Optional language-model endpoints.** If you register a language-model endpoint with an API key, passages
    are sent to that provider when you use the features that call it. By default no such endpoint is used.
-4. **Your AI client and its model.** Whatever Claude (or another client) asks the program for — search
+5. **Your AI client and its model.** Whatever Claude (or another client) asks the program for — search
    results, passages, table rows — is returned to that client and is processed by its model,
    under the privacy terms of the client's provider (for Claude: Anthropic's). This includes the
    language-model tasks of the built-in bridge (`llm_tasks` / `llm_answer`): to build tables, the program hands passages of your documents to the client as tasks, and the client's model
    answers them. The program starts no model and no other program itself and sends these passages nowhere else.
-5. **Program download (npm).** In Claude Code, the plugin starts the program with `npx`, which fetches the
-   npm packages `@matthiasnordwig/matrix-mcp` and `@matthiasnordwig/matrix-mcp-darwin-arm64` from
+6. **Program download (npm).** In Claude Code, the plugin starts the program with `npx`, which fetches the
+   npm packages `@matthiasnordwig/matrix-mcp` and the one for your system (for example
+   `@matthiasnordwig/matrix-mcp-win32-x64`) from
    registry.npmjs.org once per version and keeps them in npm's cache. No document content is sent; npm sees
    the request and your IP address and handles it under its own privacy policy.
-6. **Matrix app extension.** The "Matrix" extension only talks to the Matrix app on `127.0.0.1` (your own
+7. **Matrix app extension.** The "Matrix" extension only talks to the Matrix app on `127.0.0.1` (your own
    computer); the app's own policy applies to what the app does.
 
 No other data leaves your computer. There are no third-party analytics, advertising or tracking services.

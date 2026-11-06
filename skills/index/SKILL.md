@@ -31,9 +31,9 @@ read and why before you call it, and never try to get around a refusal.
    - how they were split: `chunking: structural` means along the document's own structure - articles,
      headings, tables and PDF layout - not by a language model;
    - `chunks_from_scanned_pages` > 0: that many passages came from scanned pages read by text recognition
-     (on the Mac, locally); 0 means no scanned pages;
+     (locally on this computer); 0 means no scanned pages;
    - mails: their attachments became documents of their own; `attachments_from_mail_text` > 0 means
      that many attachments were found only as text inside a mail, for example a returned mail (say so);
    - every skipped file with its reason (`skipped`), in a short list;
-   - where the index lives: `~/Library/Application Support/Matrix MCP`, on this computer only.
+   - where the index lives: `~/Library/Application Support/Matrix MCP` (macOS), `%APPDATA%\Matrix MCP` (Windows) or `~/.local/share/matrix-mcp` (Linux), on this computer only.
 6. Say the collection stays searchable in later sessions (`/matrix:ask`, `/matrix:table`, `/matrix:status`).

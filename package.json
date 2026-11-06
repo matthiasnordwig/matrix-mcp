@@ -2,6 +2,6 @@
   "name": "matrix-plugin-launcher",
   "private": true,
   "dependencies": {
-    "@matthiasnordwig/matrix-mcp": "0.2.4"
+    "@matthiasnordwig/matrix-mcp": "0.2.5"
   }
 }

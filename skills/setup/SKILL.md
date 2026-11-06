@@ -13,7 +13,7 @@ Matrix is already set up, say so and offer `/matrix:status` or a question instea
 
 1. **What Matrix does** (two sentences): it makes their documents - PDFs including scans and charts, Word,
    Excel, PowerPoint, mails, text - searchable by meaning on this computer, so Claude can answer from them with
-   file and page as proof. Index and search model stay on this Mac; only the passages Claude reads go to
+   file and page as proof. Index and search model stay on this computer; only the passages Claude reads go to
    Claude like any other file it reads. Ask: "Shall we set it up now? It takes a few minutes."
 2. **Which folder?** Suggest candidates, never guess without asking:
    - the folder Claude Code was started in (`list_allowed_folders` shows it as `project`), if it holds documents;
@@ -40,7 +40,7 @@ Matrix is already set up, say so and offer `/matrix:status` or a question instea
 6. **Summary in plain words:** how many documents and passages; how it was split (along the documents' own
    structure - articles, headings, tables, PDF layout - not by a language model); whether scanned pages were
    read by text recognition (`chunks_from_scanned_pages`); skipped files with the reason; that the index
-   lives in `~/Library/Application Support/Matrix MCP` on this computer only.
+   lives in Matrix's data folder on this computer only: `~/Library/Application Support/Matrix MCP` on macOS, `%APPDATA%\Matrix MCP` on Windows, `~/.local/share/matrix-mcp` on Linux.
 7. **Example questions.** Look at the titles (`list_documents`) and read two or three passages (`search_context`
    with a general query, then `get_chunks`) to see what the documents are about. Propose three concrete
    questions that these documents can answer, one line each, in the language of the documents. Ask which one

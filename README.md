@@ -23,7 +23,7 @@ It brings little for small, well-structured collections that Claude Code reads q
 
 ## Install
 
-Requires a Mac with Apple silicon (macOS, arm64) and Node.js 18 or later (for `npx`) for now.
+Runs on macOS (Apple silicon), Windows 10 or later (x64) and Linux (x64 and arm64, glibc 2.34 or later, for example Ubuntu 22.04, Debian 12, RHEL 9), with Node.js 18 or later (for `npx`).
 
 ```
 claude plugin marketplace add matthiasnordwig/matrix-mcp
@@ -41,10 +41,10 @@ Then start `claude` (best in the folder with your documents) and just ask Claude
 - Hits are compact: an excerpt of about 300 characters with file, pages and the **outline path** (document › chapter › article › paragraph), hits of one article merged. Claude reads the full text with `get_chunks`, and a whole article or section with `get_section`, before it cites.
 - Every answer cites file, page and passage, and the citations are checked against the text.
 - Tables over many documents hand small model tasks to Claude through a queue (`llm_tasks` / `llm_answer`); they run in your Claude Code session and use your Claude quota.
-- Index, models and the list of allowed folders live in `~/Library/Application Support/Matrix MCP`; nothing leaves your computer except the passages Claude reads.
+- Index, models and the list of allowed folders live in `~/Library/Application Support/Matrix MCP` (macOS), `%APPDATA%\Matrix MCP` (Windows) or `~/.local/share/matrix-mcp` (Linux); nothing leaves your computer except the passages Claude reads.
 - Matrix reads the folder you started Claude Code in; for any other folder it asks you (Accept / Decline) and remembers your answer.
 - An indexed folder stays in sync: new and changed files are read again by themselves (checked at start and before searches, at most once a minute); a deleted file stays in the collection, marked missing and left out of searches — nothing is deleted for you.
-- While Matrix reads or searches, it keeps the Mac from sleeping, as the Matrix app does.
+- While Matrix reads or searches, it keeps the computer from sleeping, as the Matrix app does.
 - `/matrix:status` shows what Matrix holds and does at any time.
 
 ## Use
@@ -81,7 +81,7 @@ Restart Claude Code after changing settings. The same works for `--config embedd
 `--config embedding_api_key=...`. A folder that does not exist or cannot be read is reported by name
 (`/matrix:status`); on macOS the privacy protection of Documents, Desktop and Downloads can be the reason —
 allow the app that runs Claude Code under System Settings › Privacy & Security › Files & Folders. The index
-folder `~/Library/Application Support/Matrix MCP` must exist or be creatable and be readable and writable for
+folder (`~/Library/Application Support/Matrix MCP` (macOS), `%APPDATA%\Matrix MCP` (Windows) or `~/.local/share/matrix-mcp` (Linux); `MATRIX_MCP_DATA_DIR` sets another) must exist or be creatable and be readable and writable for
 you; do not delete it while Claude Code runs.
 
 **Search model.** Leave `embeddinggemma-2` (multilingual, also searches charts and scans). The first time it is
@@ -91,9 +91,9 @@ Alternatives: `embeddinggemma-2-q4` (0.2 GB, text only), `onnx-folder:/path` (a 
 
 **Re-ranking.** After the search model, Claude offers once to download the re-ranking model (bge-reranker-v2-m3, int8,
 about 0.6 GB from Hugging Face, license Apache-2.0) and does so only after you agree. It re-orders the first 20 candidates
-by relevance, which costs about 4 s per search on an Apple-silicon Mac. For a long mail it reads the paragraph closest to the question instead of the header and recipients. Declined or not installed: the search runs as before.
-Claude Code starts the server with `npx -y @matthiasnordwig/matrix-mcp@0.2.4`: npm fetches the program once
-(about 22 MB, no install script). For Claude Desktop, each
+by relevance, which costs about 4 s per search on an Apple-silicon Mac (not yet measured on Windows and Linux). For a long mail it reads the paragraph closest to the question instead of the header and recipients. Declined or not installed: the search runs as before.
+Claude Code starts the server with `npx -y @matthiasnordwig/matrix-mcp@0.2.5`: npm fetches the program once
+(about 20 to 30 MB, only the package for your system, no install script). For Claude Desktop, each
 [release](https://github.com/matthiasnordwig/matrix-mcp/releases) also carries `matrix-standalone.mcpb`,
 the same program as a desktop extension.
 
