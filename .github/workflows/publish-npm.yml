@@ -1,0 +1,50 @@
+# Veröffentlicht die fünf npm-Pakete des Matrix-Plugins per Trusted Publishing (OIDC, mit Provenance).
+# Ausgelöst durch einen veröffentlichten GitHub-Release v<version>, der die fünf .tgz und SHA256SUMS
+# als Anhänge trägt (scripts/release-npm.sh im privaten Repo legt ihn an). Die Binärdateien
+# werden nicht hier gebaut, sondern lokal; der Workflow prüft nur Prüfsummen und veröffentlicht.
+# Dateiname und Repo stehen so bei npmjs.com als „Trusted Publisher“ je Paket – nicht umbenennen.
+name: publish-npm
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - name: Anhänge laden
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release download "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --pattern '*.tgz' --pattern SHA256SUMS
+      - name: Prüfsummen und Vollständigkeit prüfen
+        run: |
+          set -euo pipefail
+          v="${GITHUB_REF_NAME#v}"
+          sha256sum -c SHA256SUMS
+          for n in matrix-mcp-darwin-arm64 matrix-mcp-win32-x64 matrix-mcp-linux-x64 matrix-mcp-linux-arm64 matrix-mcp; do
+            f="matthiasnordwig-$n-$v.tgz"
+            [ -f "$f" ] || { echo "fehlt: $f"; exit 1; }
+            grep -q " $f\$" SHA256SUMS || { echo "nicht in SHA256SUMS: $f"; exit 1; }
+          done
+          [ "$(ls *.tgz | wc -l)" -eq 5 ] || { echo "genau fünf .tgz erwartet"; exit 1; }
+      - name: Veröffentlichen (Plattformpakete zuerst, dann der Starter)
+        run: |
+          set -euo pipefail
+          v="${GITHUB_REF_NAME#v}"
+          npm --version
+          for n in matrix-mcp-darwin-arm64 matrix-mcp-win32-x64 matrix-mcp-linux-x64 matrix-mcp-linux-arm64 matrix-mcp; do
+            f="matthiasnordwig-$n-$v.tgz"
+            if npm view "@matthiasnordwig/$n@$v" version >/dev/null 2>&1; then
+              echo "$n@$v liegt schon auf npm – übersprungen"; continue
+            fi
+            npm publish "./$f" --access public --provenance
+          done
