@@ -92,7 +92,7 @@ Alternatives: `embeddinggemma-2-q4` (0.2 GB, text only), `onnx-folder:/path` (a 
 **Re-ranking.** After the search model, Claude offers once to download the re-ranking model (bge-reranker-v2-m3, int8,
 about 0.6 GB from Hugging Face, license Apache-2.0) and does so only after you agree. It re-orders the first 20 candidates
 by relevance, which costs about 4 s per search on an Apple-silicon Mac (not yet measured on Windows and Linux). For a long mail it reads the paragraph closest to the question instead of the header and recipients. Declined or not installed: the search runs as before.
-Claude Code starts the server with `npx -y @matthiasnordwig/matrix-mcp@0.2.6`: npm fetches the program once
+Claude Code starts the server with `npx -y @matthiasnordwig/matrix-mcp@0.2.7`: npm fetches the program once
 (about 20 to 30 MB, only the package for your system, no install script). For Claude Desktop, each
 [release](https://github.com/matthiasnordwig/matrix-mcp/releases) also carries `matrix-standalone.mcpb`,
 the same program as a desktop extension.
