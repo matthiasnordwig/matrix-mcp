@@ -3,7 +3,7 @@
   "name": "io.github.matthiasnordwig/matrix-mcp",
   "title": "Matrix",
   "description": "Answer questions over large PDF folders up to 3x faster, with file and page citations. Runs locally.",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "websiteUrl": "https://github.com/matthiasnordwig/matrix-mcp",
   "repository": {
     "url": "https://github.com/matthiasnordwig/matrix-mcp",
@@ -13,15 +13,15 @@
     {
       "registryType": "npm",
       "identifier": "@matthiasnordwig/matrix-mcp",
-      "version": "0.2.7",
+      "version": "0.2.8",
       "transport": {
         "type": "stdio"
       }
     },
     {
       "registryType": "mcpb",
-      "identifier": "https://github.com/matthiasnordwig/matrix-mcp/releases/download/v0.2.7/matrix-standalone.mcpb",
-      "fileSha256": "1f4294b8ea2e7441ce06188b5eb8121998715bf13f080a1cfa45f27f0c27067b",
+      "identifier": "https://github.com/matthiasnordwig/matrix-mcp/releases/download/v0.2.8/matrix-standalone.mcpb",
+      "fileSha256": "c49e4f80655d9f6938ac70e9fe12385c497ba3c82893caa1b4e32225e6dbb0cc",
       "transport": {
         "type": "stdio"
       }
