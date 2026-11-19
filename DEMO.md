@@ -78,32 +78,34 @@ EmbeddingGemma 2 for text and graphics pages).
 | Q4 | rank 3 | rank 1 |
 
 **Claude Code A vs. B, current measurement** (2026-11-19, Claude Code 2.1.309, model Sonnet, plugin 0.2.9;
-index 1,745 passages in 277 s; B two runs per question, A one run; Ø per run; input tokens include cache
+index 1,745 passages in 277 s; two runs per question for A and B; Ø per run; input tokens include cache
 reads, which make up most of them; **All** = mean of the four questions):
 
 | Question | Config | Correct | Ø input tokens | Ø output tokens | Ø tool calls | Ø time s |
 |---|---|---|---|---|---|---|
-| Q1 paraphrase | A | 1/1 | 665 k | 2.7 k | 10.0 | 34 |
+| Q1 paraphrase | A | 2/2 | 851 k | 3.1 k | 12.0 | 38 |
 | Q1 paraphrase | B | 2/2 | 172 k | 1.1 k | 7.0 | 21 |
-| Q2 chart | A | 0/1 | 837 k | 2.7 k | 11.0 | 38 |
+| Q2 chart | A | 1/2 | 913 k | 3.3 k | 13.0 | 43 |
 | Q2 chart | B | 2/2 | 232 k | 1.5 k | 9.0 | 21 |
-| Q3 three acts | A | 1/1 | 1,377 k | 5.8 k | 19.0 | 66 |
+| Q3 three acts | A | 2/2 | 1,415 k | 6.4 k | 19.5 | 71 |
 | Q3 three acts | B | 2/2 | 223 k | 3.0 k | 11.5 | 27 |
-| Q4 paraphrase | A | 1/1 | 808 k | 2.6 k | 11.0 | 35 |
+| Q4 paraphrase | A | 2/2 | 920 k | 3.0 k | 13.0 | 38 |
 | Q4 paraphrase | B | 2/2 | 102 k | 0.8 k | 4.0 | 12 |
-| **All** | A | 3/4 | 922 k | 3.5 k | 12.75 | 43 |
+| **All** | A | 7/8 | 1,025 k | 3.9 k | 14.4 | 48 |
 | **All** | B | 8/8 | 182 k | 1.6 k | 7.9 | 20 |
 
 Correctness was judged by hand. The script marks both B answers to Q3 as wrong because its keywords are
 English and the answers came in German; the content is right (72 h, 15 days, 2/10 days, DORA without a fixed
-deadline, pages correct). A's Q2 answer is wrong: it read 15.87 % (Figure 5, ENISA p. 13) from a
-low-resolution page image instead of 19.01 % on p. 10. B found p. 10 in both runs; the earlier B miss on
+deadline, pages correct). A's Q2 answer was wrong in the first run: it read 15.87 % (Figure 5, ENISA p. 13) from a
+low-resolution page image instead of 19.01 % on p. 10 (the second A run got it right). B found p. 10 in both runs; the earlier B miss on
 Q2 did not recur.
 
-Reading, honestly: B needs about half of A's time (earlier measurement: a third) and a fifth of its input
-tokens (earlier: just under half). Claude Code alone got much faster since October (126 → 43 s) but uses
-more input tokens (651 k → 922 k); B itself went from 42 → 20 s and 303 k → 182 k. This is no evidence of
-better correctness: A ran once per question, so one miss is a single observation.
+Reading, honestly: B needs a good two fifths of A's time (20 instead of 48 s; earlier measurement: a third) and
+less than a fifth of its input tokens (182 k instead of 1,025 k; earlier: just under half). Claude Code alone got
+much faster since October (126 → 48 s) but uses more input tokens (651 k → 1,025 k); B itself went from 42 → 20 s
+and 303 k → 182 k. This is no evidence of better correctness: one miss in 8 A runs. The second A run was made on
+the morning of 2026-11-19 with the same Claude Code version (2.1.309) while a website build ran on the Mac; the
+times may be slightly too high, the tokens are unaffected.
 
 **Earlier measurement, for comparison** (2026-10-22, Claude Code 2.1.222, plugin of that date, 2 runs each,
 index 1,779 passages in 269 s): A 8/8 correct, 651 k input tokens, 21.4 tool calls, 126 s; B 7/8, 303 k,
