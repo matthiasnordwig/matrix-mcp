@@ -103,7 +103,8 @@ Q2 did not recur.
 Reading, honestly: B needs a good two fifths of A's time (20 instead of 48 s; earlier measurement: a third) and
 less than a fifth of its input tokens (182 k instead of 1,025 k; earlier: just under half). Claude Code alone got
 much faster since October (126 → 48 s) but uses more input tokens (651 k → 1,025 k); B itself went from 42 → 20 s
-and 303 k → 182 k. This is no evidence of better correctness: one miss in 8 A runs. The second A run was made on
+and 303 k → 182 k. Most input tokens are cache reads (A 93 %, B 86 %), which cost less; without them A read
+76 k and B 25 k per question, and at API prices a question with B cost about a third as much as with A. This is no evidence of better correctness: one miss in 8 A runs. The second A run was made on
 the morning of 2026-11-19 with the same Claude Code version (2.1.309) while a website build ran on the Mac; the
 times may be slightly too high, the tokens are unaffected.
 
