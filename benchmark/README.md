@@ -41,8 +41,9 @@ From the final result object Claude Code prints for each run:
 
 The script scores each answer automatically: `correct` = every pattern in `must` matches, `cited_ok` = each
 gold file is named together with one of its gold pages. This is a lenient first pass; the published figures
-were **checked by hand**. One known difference: the script marks both B answers to Q3 as wrong because its
-patterns are English and the answers came in German; their content (72 h, 15 days, 2 and 10 days, DORA
+were **checked by hand**. One known difference: the script marks both B answers to Q3 as wrong because one
+of its five patterns, the English one for DORA's technical standards, did not match the German answers
+("technische Regulierungsstandards"); their content (72 h, 15 days, 2 and 10 days, DORA
 without fixed hours, right pages) is correct. A's first answer to Q2 is wrong in both scorings (15.87 % from
 another chart instead of 19.01 %).
 

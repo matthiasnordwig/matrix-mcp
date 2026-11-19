@@ -92,13 +92,13 @@ reads, which make up most of them; **All** = mean of the four questions):
 | Q2 chart | B | 2/2 | 232 k | 1.5 k | 9.0 | 21 |
 | Q3 three acts | A | 2/2 | 1,415 k | 6.4 k | 19.5 | 71 |
 | Q3 three acts | B | 2/2 | 223 k | 3.0 k | 11.5 | 27 |
-| Q4 paraphrase | A | 2/2 | 920 k | 3.0 k | 13.0 | 38 |
+| Q4 paraphrase | A | 2/2 | 920 k | 2.9 k | 13.0 | 38 |
 | Q4 paraphrase | B | 2/2 | 102 k | 0.8 k | 4.0 | 12 |
 | **All** | A | 7/8 | 1,025 k | 3.9 k | 14.4 | 48 |
 | **All** | B | 8/8 | 182 k | 1.6 k | 7.9 | 20 |
 
-Correctness was judged by hand. The script marks both B answers to Q3 as wrong because its keywords are
-English and the answers came in German; the content is right (72 h, 15 days, 2/10 days, DORA without a fixed
+Correctness was judged by hand. The script marks both B answers to Q3 as wrong because one of its
+five patterns, the English one for DORA's technical standards, did not match the German answers; the content is right (72 h, 15 days, 2/10 days, DORA without a fixed
 deadline, pages correct). A's Q2 answer was wrong in the first run: it read 15.87 % (Figure 5, ENISA p. 13) from a
 low-resolution page image instead of 19.01 % on p. 10 (the second A run got it right). B found p. 10 in both runs; the earlier B miss on
 Q2 did not recur.
