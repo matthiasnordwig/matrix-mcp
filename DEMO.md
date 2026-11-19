@@ -65,10 +65,10 @@ Fixed before any run. Pages are PDF pages (1 = first page of the file).
 
 ## Results
 
-**Indexing (once):** 442 pages → 1,779 passages, 269 s on the development Mac (Apple silicon,
+**Indexing (once):** 442 pages → 1,745 passages, 277 s (earlier measurement: 1,779 passages, 269 s) on the development Mac (Apple silicon,
 EmbeddingGemma 2 for text and graphics pages).
 
-**Search alone (no Claude, first right page among the top 8 hits):**
+**Search alone, October measurement (no Claude, first right page among the top 8 hits):**
 
 | Question | As asked (English) | Worded like the documents |
 |---|---|---|
@@ -77,26 +77,44 @@ EmbeddingGemma 2 for text and graphics pages).
 | Q3 | not in top 8 | one query per act: AI Act rank 1, GDPR rank 2, DORA rank 3 |
 | Q4 | rank 3 | rank 1 |
 
-**Claude Code A vs. B** (2026-10-22, Claude Code 2.1.222, model Sonnet, 2 runs each; Ø per run; input
-tokens include cache reads, which make up most of them; **All** = mean of the four questions):
+**Claude Code A vs. B, current measurement** (2026-11-19, Claude Code 2.1.309, model Sonnet, plugin 0.2.9;
+index 1,745 passages in 277 s; B two runs per question, A one run; Ø per run; input tokens include cache
+reads, which make up most of them; **All** = mean of the four questions):
 
-| Question | Config | Correct | Citation right | Ø input tokens | Ø output tokens | Ø tool calls | Ø time s |
-|---|---|---|---|---|---|---|---|
-| Q1 paraphrase | A | 2/2 | 2/2 | 381 k | 6.7 k | 14.5 | 86 |
-| Q1 paraphrase | B | 2/2 | 2/2 | 187 k | 1.4 k | 6.0 | 26 |
-| Q2 chart | A | 2/2 | 2/2 | 585 k | 7.0 k | 19.5 | 109 |
-| Q2 chart | B | 1/2 | 1/2 | 407 k | 2.3 k | 11.0 | 51 |
-| Q3 three acts | A | 2/2 | 2/2 | 1,279 k | 17.2 k | 37.0 | 245 |
-| Q3 three acts | B | 2/2 | 2/2 | 428 k | 4.5 k | 15.5 | 62 |
-| Q4 paraphrase | A | 2/2 | 2/2 | 357 k | 4.2 k | 14.5 | 64 |
-| Q4 paraphrase | B | 2/2 | 2/2 | 191 k | 1.1 k | 5.5 | 27 |
-| **All** | A | 8/8 | 8/8 | 651 k | 8.8 k | 21.4 | 126 |
-| **All** | B | 7/8 | 7/8 | 303 k | 2.3 k | 9.5 | 42 |
+| Question | Config | Correct | Ø input tokens | Ø output tokens | Ø tool calls | Ø time s |
+|---|---|---|---|---|---|---|
+| Q1 paraphrase | A | 1/1 | 665 k | 2.7 k | 10.0 | 34 |
+| Q1 paraphrase | B | 2/2 | 172 k | 1.1 k | 7.0 | 21 |
+| Q2 chart | A | 0/1 | 837 k | 2.7 k | 11.0 | 38 |
+| Q2 chart | B | 2/2 | 232 k | 1.5 k | 9.0 | 21 |
+| Q3 three acts | A | 1/1 | 1,377 k | 5.8 k | 19.0 | 66 |
+| Q3 three acts | B | 2/2 | 223 k | 3.0 k | 11.5 | 27 |
+| Q4 paraphrase | A | 1/1 | 808 k | 2.6 k | 11.0 | 35 |
+| Q4 paraphrase | B | 2/2 | 102 k | 0.8 k | 4.0 | 12 |
+| **All** | A | 3/4 | 922 k | 3.5 k | 12.75 | 43 |
+| **All** | B | 8/8 | 182 k | 1.6 k | 7.9 | 20 |
 
-The one miss (Q2, B, run 1): the stored chart picture was too small to read the label, and Claude then
-tried to render the page with a shell command the test did not allow. The `ask` skill now says to open
-such a page with Read; after that change one more B run per question: 4/4 correct with citations,
-Ø 33 s.
+Correctness was judged by hand. The script marks both B answers to Q3 as wrong because its keywords are
+English and the answers came in German; the content is right (72 h, 15 days, 2/10 days, DORA without a fixed
+deadline, pages correct). A's Q2 answer is wrong: it read 15.87 % (Figure 5, ENISA p. 13) from a
+low-resolution page image instead of 19.01 % on p. 10. B found p. 10 in both runs; the earlier B miss on
+Q2 did not recur.
+
+Reading, honestly: B needs about half of A's time (earlier measurement: a third) and a fifth of its input
+tokens (earlier: just under half). Claude Code alone got much faster since October (126 → 43 s) but uses
+more input tokens (651 k → 922 k); B itself went from 42 → 20 s and 303 k → 182 k. This is no evidence of
+better correctness: A ran once per question, so one miss is a single observation.
+
+**Earlier measurement, for comparison** (2026-10-22, Claude Code 2.1.222, plugin of that date, 2 runs each,
+index 1,779 passages in 269 s): A 8/8 correct, 651 k input tokens, 21.4 tool calls, 126 s; B 7/8, 303 k,
+9.5, 42 s. The one B miss (Q2): the stored chart picture was too small to read the label, and Claude then
+tried to render the page with a shell command the test did not allow. The `ask` skill now says to open such
+a page with Read; after that change one more B run per question: 4/4 correct, Ø 33 s.
+
+**Search alone, version 0.2.9** (no Claude, first right page among the top 8 hits): asked word for word in
+English: Q1 not in top 8, Q2 rank 1, Q3 rank 3, Q4 rank 1. Worded like the documents: Q1 rank 1, Q2 rank 1,
+Q3 GDPR rank 2 / AI Act rank 1 / DORA rank 7 (one query per act), Q4 rank 1. In B, Claude still searched
+mostly in English, for Q3 additionally in German.
 
 **Table over the bridge** (`/matrix:table`, 4 rows, one run): Claude found one passage per act, let Matrix
 propose the columns, answered the 5 model tasks itself (`llm_tasks` / `llm_answer`) and returned a correct
@@ -122,7 +140,7 @@ provision in a single act (Q4) the gap is smallest in absolute terms (64 s → 2
 - **Cost of entry.** Indexing takes minutes once per folder, and the search model is a one-time download
   of about 1.2 GB. For one short, well-structured document Claude Code alone is just as good.
 
-## Second measurement: 14 documents, 1,592 pages, four languages (version 0.2.3)
+## Second measurement: 14 documents, 1,592 pages, four languages (status of version 0.2.3, not re-measured since)
 
 The first test is small: 442 pages, so Claude Code alone copes well. This one is larger and mixed, and it measures
 two things separately: how well the **search** finds the right place (no Claude involved, 30 questions), and what a
