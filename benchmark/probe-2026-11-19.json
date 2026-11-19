@@ -1,0 +1,153 @@
+[
+  {
+    "id": "Q1-paraphrase",
+    "query": "Under the EU rules on digital operational resilience of the financial sector, how often do the larger financial entities have to run advanced testing that simulates real attackers?",
+    "ms": 503,
+    "gold_rank": null,
+    "hits": [
+      "dora.pdf p45",
+      "dora.pdf p13",
+      "dora.pdf p5",
+      "dora.pdf p34",
+      "dora.pdf p11",
+      "dora.pdf p1",
+      "dora.pdf p37",
+      "enisa-tl-2024.pdf p120"
+    ]
+  },
+  {
+    "id": "Q1-paraphrase",
+    "query": "Häufigkeit erweiterter Tests anhand von TLPT",
+    "ms": 19,
+    "gold_rank": 1,
+    "hits": [
+      "dora.pdf p46",
+      "dora.pdf p13",
+      "dora.pdf p13",
+      "dora.pdf p48",
+      "dora.pdf p6"
+    ]
+  },
+  {
+    "id": "Q2-chart",
+    "query": "In ENISA's threat landscape report for 2024, which share of the analysed incidents concerned threats against data (breaches, leaks)?",
+    "ms": 24,
+    "gold_rank": 1,
+    "hits": [
+      "enisa-tl-2024.pdf p10",
+      "enisa-tl-2024.pdf p5",
+      "enisa-tl-2024.pdf p13",
+      "enisa-tl-2024.pdf p19",
+      "enisa-tl-2024.pdf p72",
+      "enisa-tl-2024.pdf p73",
+      "enisa-tl-2024.pdf p92",
+      "enisa-tl-2024.pdf p7"
+    ]
+  },
+  {
+    "id": "Q2-chart",
+    "query": "Breakdown of analysed incidents by threat type",
+    "ms": 16,
+    "gold_rank": 1,
+    "hits": [
+      "enisa-tl-2024.pdf p10",
+      "enisa-tl-2024.pdf p15",
+      "enisa-tl-2024.pdf p48",
+      "enisa-tl-2024.pdf p81",
+      "enisa-tl-2024.pdf p64",
+      "enisa-tl-2024.pdf p12",
+      "enisa-tl-2024.pdf p49",
+      "enisa-tl-2024.pdf p13"
+    ]
+  },
+  {
+    "id": "Q3-across-acts",
+    "query": "An incident at a bank affects personal data, a high-risk AI system and the bank's ICT at the same time. What deadlines for reporting to the authorities do the GDPR, the AI Act and DORA each set?",
+    "ms": 31,
+    "gold_rank": 3,
+    "hits": [
+      "enisa-tl-2024.pdf p9",
+      "enisa-tl-2024.pdf p70",
+      "dora.pdf p42",
+      "enisa-tl-2024.pdf p74",
+      "ai-act.pdf p68",
+      "ai-act.pdf p25",
+      "enisa-tl-2024.pdf p75",
+      "ai-act.pdf p132"
+    ]
+  },
+  {
+    "id": "Q3-across-acts",
+    "query": "Meldung einer Verletzung des Schutzes personenbezogener Daten an die Aufsichtsbehörde",
+    "ms": 20,
+    "gold_rank": 2,
+    "hits": [
+      "dsgvo.pdf p16",
+      "dsgvo.pdf p52",
+      "dsgvo.pdf p52",
+      "dsgvo.pdf p77",
+      "dsgvo.pdf p34"
+    ]
+  },
+  {
+    "id": "Q3-across-acts",
+    "query": "Meldung schwerwiegender Vorfälle durch Anbieter von Hochrisiko-KI-Systemen",
+    "ms": 22,
+    "gold_rank": 1,
+    "hits": [
+      "ai-act.pdf p101",
+      "ai-act.pdf p68",
+      "dora.pdf p21",
+      "ai-act.pdf p64",
+      "dora.pdf p41",
+      "ai-act.pdf p108",
+      "dora.pdf p23"
+    ]
+  },
+  {
+    "id": "Q3-across-acts",
+    "query": "Fristen für die Erstmeldung schwerwiegender IKT-bezogener Vorfälle",
+    "ms": 20,
+    "gold_rank": 7,
+    "hits": [
+      "dora.pdf p39",
+      "dora.pdf p44",
+      "dora.pdf p40",
+      "dora.pdf p25",
+      "dora.pdf p41",
+      "dora.pdf p39",
+      "dora.pdf p43"
+    ]
+  },
+  {
+    "id": "Q4-paraphrase",
+    "query": "For how long must the provider of a high-risk AI system keep its technical documentation available for the national authorities?",
+    "ms": 23,
+    "gold_rank": 1,
+    "hits": [
+      "ai-act.pdf p63",
+      "ai-act.pdf p80",
+      "ai-act.pdf p62",
+      "enisa-tl-2024.pdf p79",
+      "ai-act.pdf p65",
+      "ai-act.pdf p33",
+      "ai-act.pdf p66",
+      "enisa-tl-2024.pdf p128"
+    ]
+  },
+  {
+    "id": "Q4-paraphrase",
+    "query": "Aufbewahrung der Dokumentation Hochrisiko-KI-System",
+    "ms": 19,
+    "gold_rank": 1,
+    "hits": [
+      "ai-act.pdf p63",
+      "ai-act.pdf p62",
+      "ai-act.pdf p56",
+      "ai-act.pdf p58",
+      "ai-act.pdf p65",
+      "ai-act.pdf p23",
+      "ai-act.pdf p20"
+    ]
+  }
+]

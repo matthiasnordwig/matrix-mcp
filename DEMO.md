@@ -38,6 +38,9 @@ And one table over the documents:
 /matrix:table For each regulation: which incidents must be reported, to whom, and within which deadline?
 ```
 
+To rerun the whole A/B comparison automatically (download, index, 16 Claude Code runs, table), see
+[benchmark/](benchmark/README.md).
+
 ## The questions and the right answers
 
 Fixed before any run. Pages are PDF pages (1 = first page of the file).
@@ -61,7 +64,7 @@ Fixed before any run. Pages are PDF pages (1 = first page of the file).
   the tool calls), two runs per question and configuration, empty working directory, the PDF folder
   added with `--add-dir`, only project settings. Tokens and cost as Claude Code reports them.
 - Indexing runs once before the B runs and is counted separately (it is paid once per folder, not per
-  question). The script: `scripts/bench_claude_plugin.py` in the Matrix repository.
+  question). Script, questions, gold answers and raw results: [benchmark/](benchmark/README.md).
 
 ## Results
 

@@ -1,0 +1,62 @@
+{
+  "collection": "EU corpus",
+  "corpus": {
+    "dora.pdf": {
+      "url": "https://publications.europa.eu/resource/celex/32022R2554",
+      "headers": {"Accept": "application/pdf", "Accept-Language": "deu"},
+      "sha256": "0eb896db808c049c02b6aa18a6255f188a90c034976203d8edd5cc43414e205a"
+    },
+    "ai-act.pdf": {
+      "url": "https://publications.europa.eu/resource/celex/32024R1689",
+      "headers": {"Accept": "application/pdf", "Accept-Language": "deu"},
+      "sha256": "f631a60af3315700112400d55bcecbf264094863cd32660ae0a208dd7130de9c"
+    },
+    "dsgvo.pdf": {
+      "url": "https://publications.europa.eu/resource/celex/32016R0679",
+      "headers": {"Accept": "application/pdf;type=pdfa1a", "Accept-Language": "deu"},
+      "sha256": "27b720c812be1bdf1462ff468ad6410fe94da80b48f6d10fa7e2269b9e5a1597"
+    },
+    "enisa-tl-2024.pdf": {
+      "url": "https://www.enisa.europa.eu/sites/default/files/2024-11/ENISA%20Threat%20Landscape%202024_0.pdf",
+      "headers": {},
+      "sha256": "28b9cb3f8b12bac1ccae84ef1b36b74dfa5c53a3594e8634905c60e6f7ba1821"
+    }
+  },
+  "questions": [
+    {
+      "id": "Q1-paraphrase",
+      "text": "Under the EU rules on digital operational resilience of the financial sector, how often do the larger financial entities have to run advanced testing that simulates real attackers?",
+      "gold": "At least every three years (threat-led penetration testing, TLPT); the competent authority may ask for a lower or higher frequency. DORA Art. 26(1), dora.pdf p. 46.",
+      "must": ["\\b(three|3|drei)\\b.{0,12}\\b(years?|jahre)"],
+      "pages": {"dora": [46]},
+      "probe": ["Häufigkeit erweiterter Tests anhand von TLPT"]
+    },
+    {
+      "id": "Q2-chart",
+      "text": "In ENISA's threat landscape report for 2024, which share of the analysed incidents concerned threats against data (breaches, leaks)?",
+      "gold": "19.01 % (about 1.91 K incidents), third after DoS/DDoS/RDoS (41.1 %) and ransomware (25.79 %). Only in the chart Figure 2, enisa-tl-2024.pdf p. 10 (printed page 9).",
+      "must": ["19[.,]01|1[.,]91\\s*k"],
+      "pages": {"enisa": [9, 10]},
+      "probe": ["Breakdown of analysed incidents by threat type"]
+    },
+    {
+      "id": "Q3-across-acts",
+      "text": "An incident at a bank affects personal data, a high-risk AI system and the bank's ICT at the same time. What deadlines for reporting to the authorities do the GDPR, the AI Act and DORA each set?",
+      "gold": "GDPR: without undue delay, where feasible within 72 hours (Art. 33(1), dsgvo.pdf p. 52). AI Act: immediately after establishing the causal link, at the latest 15 days; 2 days for a widespread infringement or critical infrastructure; 10 days in case of death (Art. 73(2)-(4), ai-act.pdf p. 101-102). DORA: no fixed hours in the regulation - initial, intermediate and final report within time limits set by technical standards (Art. 19(4), 20(a)(ii), dora.pdf p. 42-43).",
+      "must": ["72\\s*(hours|h\\b|stunden)", "15\\s*(days|tage)", "\\b(2|two|zwei)\\s*(days|tage)",
+               "\\b(10|ten|zehn)\\s*(days|tage)", "(technical|regulatory)\\s+standards|RTS"],
+      "pages": {"dsgvo": [52], "ai-act": [101, 102], "dora": [42, 43]},
+      "probe": ["Meldung einer Verletzung des Schutzes personenbezogener Daten an die Aufsichtsbehörde",
+                "Meldung schwerwiegender Vorfälle durch Anbieter von Hochrisiko-KI-Systemen",
+                "Fristen für die Erstmeldung schwerwiegender IKT-bezogener Vorfälle"]
+    },
+    {
+      "id": "Q4-paraphrase",
+      "text": "For how long must the provider of a high-risk AI system keep its technical documentation available for the national authorities?",
+      "gold": "Ten years after the system was placed on the market or put into service (AI Act Art. 18(1), ai-act.pdf p. 63).",
+      "must": ["\\b(ten|10|zehn)\\s*(years|jahre)"],
+      "pages": {"ai-act": [63]},
+      "probe": ["Aufbewahrung der Dokumentation Hochrisiko-KI-System"]
+    }
+  ]
+}
